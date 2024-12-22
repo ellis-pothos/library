@@ -9,29 +9,48 @@ const container = document.querySelector("#container");
         newBookButton.textContent = "Recommend a book to me!";
         container.appendChild(newBookButton); 
 
+        const dialog = document.createElement('dialog');
+        container.appendChild(dialog);
+
+
         // book recommendation form 
             bookBtn.addEventListener(`click`, () => {
-                const newBookForm = document.createElement('form');
-                newBookForm.id = 'bookForm';
+                dialog.showModal();
 
-                const titleInput = document.createElement('input');
-                titleInput.type = 'text';
-                titleInput.name = 'title';
-                titleInput.placeholder = 'Enter the book title';
+                    const newBookForm = document.createElement('form');
+                    newBookForm.id = 'bookForm';
 
-                const authorInput = document.createElement('input');
-                authorInput.type = 'text';
-                authorInput.name = 'author';
-                authorInput.placeholder = "Enter the book's author";
-                
-                // append each input to the form
-                newBookForm.appendChild(titleInput);
-                newBookForm.appendChild(authorInput);
+                    const titleInput = document.createElement('input');
+                    titleInput.type = 'text';
+                    titleInput.name = 'title';
+                    titleInput.placeholder = 'Enter the book title';
 
-                // append the form to the container
-                container.appendChild(newBookForm); 
+                    const authorInput = document.createElement('input');
+                    authorInput.type = 'text';
+                    authorInput.name = 'author';
+                    authorInput.placeholder = "Enter the book's author";
+                    
+                    const submitButton = document.createElement('button');
+                    submitButton.type = 'button';
+                    submitButton.textContent = 'Submit';
 
-                
+                    // append each input to the form
+                    newBookForm.appendChild(titleInput);
+                    newBookForm.appendChild(authorInput);
+                    newBookForm.appendChild(submitButton);
+
+                    // append the form to the dialog
+                    dialog.appendChild(newBookForm); 
+
+                // submit button which will contain the function for adding the new book to the library
+                submitButton.addEventListener(`click`, () => {
+                // create new object (book) from the form input and then 
+                // push that object (book) into the library array
+                    const recommendation = new Book(titleInput.value, authorInput.value);
+                    library.push(recommendation);
+                    console.log(recommendation);
+                    dialog.close();
+                });
             });
 
 
@@ -42,7 +61,7 @@ const library = [];
 function Book(title, author) {
     this.title = title;
     this.author = author;
-    console.log(this.title + " by " + this.author)
+    console.log(this.title + ` by ` + this.author)
 }
 
 // function that pushes the new book into the library array
