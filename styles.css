@@ -1,8 +1,40 @@
-div:not(#container){
-    width: 300px;
-    height: 300px;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 15px;
+* {
+    box-sizing: border-box;
 }
 
+.mainContainer {
+    text-align: center;
+}
+
+.bookDiv {
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin: 15px; 
+    align-items: center;
+    justify-content: center;
+}
+
+#readBtn {
+    width: 100px; 
+    margin-top: 10px;
+}
+
+#readBtn:active {
+    background-color: green;
+}
+
+#bookImage {
+    width: 200px; 
+}
+
+.library {
+    display: grid;
+    width: 100vw; 
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-rows: repeat(auto-fit, 300px);
+    align-items: center;
+    justify-content: center;
+}
