@@ -2,8 +2,13 @@
     box-sizing: border-box;
 }
 
+button {
+    width: 300px;
+}
+
 .mainContainer {
     text-align: center;
+    margin: 15px;
 }
 
 .bookDiv {

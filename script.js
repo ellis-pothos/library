@@ -6,9 +6,9 @@
 // library
 const library = [];
 
-// test books 
-const book1 = new Book("Parable of the Sower", "Octavia Butler", true);
-const book2 = new Book("What We Don't Talk About When We Talk About Fat", "Aubrey Gordon", false);
+// // test books 
+// const book1 = new Book("Parable of the Sower", "Octavia Butler", true);
+// const book2 = new Book("What We Don't Talk About When We Talk About Fat", "Aubrey Gordon", false);
 
 // container of all the things 
 const container = document.querySelector("#container");
@@ -52,10 +52,10 @@ container.classList.add("mainContainer");
                 // create new object (book) from the form input and then 
                 // push that object (book) into the library array
                     const recommendation = new Book(titleInput.value, authorInput.value, false);
-                    addBook(recommendation);
+                    recommendation.addBook();
                     newBookForm.reset(); 
                     dialog.close();
-                    displayBook(recommendation);
+                    recommendation.displayBook();
                 });
 
     // append the form to the dialog
@@ -66,32 +66,31 @@ container.classList.add("mainContainer");
     dialog.showModal();
     });
 
+    const displayLibraryBtn = document.createElement("button");
+    displayLibraryBtn.classList.add("libraryBtn");
+    displayLibraryBtn.textContent = "Show my library"
+    container.appendChild(displayLibraryBtn);
+
 // library books will go here
 const libraryContainer = document.createElement("div");
 libraryContainer.classList.add("library");
 container.appendChild(libraryContainer);
 
-// prototype - the function that creates new books as objects 
-function Book(title, author, wasItRead) {
-    this.title = title;
-    this.author = author;
-    this.read = wasItRead; 
-    return this.title + ` by ` + this.author + ` ` + this.read
-}
+class Book {
+    constructor(title, author, wasItRead) {
+        this.title = title;
+        this.author = author;
+        this.read = wasItRead; 
+    }
 
-// function that pushes the new book into the library array
-const addBook = function(newBook) {
-    library.push(newBook);
-}
+    addBook = () => {
+        library.push(this);
+    }
 
-// function that displays each book on the page
-const displayBook = function(book) {
-    // const container = document.querySelector("#container");
-    // container.classList.add("mainContainer"); 
-
+    displayBook = () => {
         const bookDiv = document.createElement("div");
         bookDiv.classList.add("bookDiv");
-        bookDiv.textContent = `${book.title} by ${book.author}`; 
+        bookDiv.textContent = `${this.title} by ${this.author}`; 
         
         const bookImage = document.createElement("img");
         bookImage.id = "bookImage"; 
@@ -100,7 +99,7 @@ const displayBook = function(book) {
 
         const readBtn = document.createElement(`button`);
         readBtn.id = "readBtn"; 
-        if (book.read === true) {
+        if (this.read === true) {
             readBtn.textContent = "I read it!";
         } else {
             readBtn.textContent = "It's on my list!";
@@ -109,16 +108,17 @@ const displayBook = function(book) {
 
             // button that toggles whether the book was read
             readBtn.addEventListener(`click`, () => {
-                if (book.read === true) {
+                if (this.read === true) {
                     readBtn.textContent = "It's on my list!"
                     // update the object with the new value 
-                    book.read = false; 
+                    this.read = false; 
                 } else {
                     readBtn.textContent = "I read it!";
-                    book.read = true; 
+                    this.read = true; 
                 }
             }); 
         libraryContainer.appendChild(bookDiv); 
+    }
 }
 
 const displayLibrary = function () {
